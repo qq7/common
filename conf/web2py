@@ -10,9 +10,10 @@ W2PPASS=turnkey
 W2PROOT=/var/www/web2py
 
 # download and unpack web2py
-dl http://www.web2py.com/examples/static/web2py_src.zip $SRC
-unzip $SRC/web2py_src.zip -d $(dirname $W2PROOT)
-rm $SRC/web2py_src.zip
+git clone https://github.com/web2py/web2py $SRC/web2py
+cd $SRC/web2py
+git checkout 81d0291ce2aa9d49c7dc23014d58597bbff6c10a
+mv $SRC/web2py $W2PROOT
 
 # Install GitPython in virtualenv to workaround turnkey-pylib
 # git.py conflict
@@ -20,6 +21,9 @@ virtualenv $W2PROOT/venv
 $W2PROOT/venv/bin/pip install GitPython
 
 chown -R www-data:www-data $W2PROOT
+
+cd $W2PROOT
+git submodule update --init --recursive
 
 # copy wsgihandler to web2py root
 cp $W2PROOT/handlers/wsgihandler.py $W2PROOT/wsgihandler.py
