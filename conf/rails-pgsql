@@ -43,8 +43,8 @@ EOF
 
 chmod +x /usr/local/rbenv/rbenv.d/rehash/gem-symlinks.bash
 
-MAKE_OPTS="-j$(nproc)" RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.4.5
-rbenv global 2.4.5
+MAKE_OPTS="-j$(nproc)" RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.6.6
+rbenv global 2.6.6
 
 gem update --system
 
@@ -78,9 +78,9 @@ done
 # seed rails application (3.x requires new)
 cd /var/www
 if $(rails --version | grep -q "Rails 2.3"); then
-    rails $APPNAME -d mysql --skip
+    rails $APPNAME -d postgresql --skip
 else
-    rails new $APPNAME -d mysql --skip
+    rails new $APPNAME -d postgresql --skip
 fi
 unset HTTP_PROXY
 
@@ -119,4 +119,3 @@ sed -i "s|@APPNAME@|$APPNAME|g" /etc/logrotate.d/$APPNAME
 a2ensite $APPNAME
 
 service postgresql stop
-
