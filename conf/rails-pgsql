@@ -75,9 +75,13 @@ for DB_ENV in test development production; do
     su postgres -c "createdb --owner $DB_USER -EUTF8 $DB_NAME"
 done
 
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+apt update && apt install yarn
+
 # seed rails application (3.x requires new)
 cd /var/www
-if $(rails --version | grep -q "Rails 2.3"); then
+if $(rails --version | grep -q "Rails 2.5"); then
     rails $APPNAME -d postgresql --skip
 else
     rails new $APPNAME -d postgresql --skip
