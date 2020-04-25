@@ -46,6 +46,10 @@ chmod +x /usr/local/rbenv/rbenv.d/rehash/gem-symlinks.bash
 MAKE_OPTS="-j$(nproc)" RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.4.5
 rbenv global 2.4.5
 
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+sudo apt update && sudo apt install yarn
+
 gem update --system
 
 gem install $GEMOPTS rack
